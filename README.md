@@ -4,28 +4,29 @@
 
 Class for the puppet master module.
 
-* `Parameters` :
-[*standalone*]
+### Parameters:
+[*standalone*]  
   Run puppetmaster in standalone mode (embedded WEBrick)
   or using Apache (namely apache, mod_passenger and rack) [true, false]
   default: true.
 
-[*autosign*]
+[*autosign*]  
   Enable autosigning CSRs [true, false], default: false.
   TODO: filepath support
 
-[*servername*]
+[*servername*]  
   Setup servername in puppet.conf, default: puppet.
 
-[*modulepath*]
+[*modulepath*]  
   Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
 
-* `Requires` :
-puppetlabs-apache
-puppetlabs-inifile
-example42-yum
+### Requires:  
+* puppetlabs-apache
+* puppetlabs-inifile
+* example42-yum
 
-* `Sample Usage` :
+### Sample Usage:
+
 ```
 puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifests/master.pp
 ```
@@ -40,27 +41,27 @@ puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifes
 
 Class for the puppet agent module.
 
-* `Parameters` :
-  [*servername*]
+### Parameters:
+  [*servername*]  
     Setup servername in puppet.conf, default: puppet.
 
-  [*noop*]
+  [*noop*]  
     Whether puppet agent should be run in noop mode, default: false.
 
-  [*cron*]
+  [*cron*]  
     Enable puppet agent runs via cron job, default: false.
 
-  [*service*]
+  [*service*]  
     Enable puppet agent service, default: true.
 
-  [*pluginsync*]
+  [*pluginsync*]  
     Enable pluginsync for the puppet agent, default: true.
 
-* `Requires` :
-puppetlabs-inifile
-example42-yum
+### Requires:
+* puppetlabs-inifile
+* example42-yum
 
-* `Sample Usage` :
+### Sample Usage:
 ```
 puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifests/agent.pp
 ```
@@ -72,5 +73,4 @@ puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifes
    cron => false,
  }
  ```
-
 
