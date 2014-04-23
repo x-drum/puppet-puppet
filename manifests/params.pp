@@ -29,10 +29,13 @@ class puppet::params {
 	$puppetagent_cron = false
 	$puppetagent_service = true
 	$puppetagent_pluginsync = true
+	$puppetagent_configtimeout = '900'
 	$puppetagent_croncommand = "/usr/bin/puppet agent --test"
 
 	case $::osfamily {
 		redhat: {
+			$puppet_owner = "root"
+			$puppet_group = "root"
 			$puppetagent_pkg = "puppet"
 			$puppetagent_srv = "puppet"
 			$puppetmaster_pkg = "puppet-server"
@@ -40,6 +43,12 @@ class puppet::params {
 			$rack_pkg = 'rubygem-rack'
 			$rack_config = '/usr/share/puppet/ext/rack/config.ru'
 			$passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.21'
+		}
+		openbsd: {
+			$puppet_owner = "root"
+			$puppet_group = "wheel"
+			$puppetagent_pkg = "puppet"
+			$puppetagent_srv = "puppetd"
 		}
 		default: {
 			fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
