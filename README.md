@@ -1,5 +1,7 @@
 ## This module manages puppet: master and agent nodes.
 
+Currently supports: RHEL/CentOS, OpenBSD
+
 ## Class: puppet::master
 
 Class for the puppet master module.
@@ -56,6 +58,9 @@ Class for the puppet agent module.
 
   [*pluginsync*]  
     Enable pluginsync for the puppet agent, default: true.
+
+   [*configtimeout*]  
+     Configuration timeout in seconds for the puppet agent, default: 900.
 
 ### Requires:
 * puppetlabs-inifile
