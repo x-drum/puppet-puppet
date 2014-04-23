@@ -18,6 +18,9 @@
 #   [*pluginsync*]
 #     Enable pluginsync for the puppet agent, default: true.
 #
+#   [*configtimeout*]
+#     Configuration timeout in seconds for the puppet agent, default: 900.
+#
 # Requires:
 # puppetlabs-inifile
 # example42-yum
@@ -45,14 +48,12 @@ class puppet::agent (
 	$cron = $puppet::params::puppetagent_cron,
 	$service = $puppet::params::puppetagent_service,
 	$pluginsync = $puppet::params::puppetagent_pluginsync,
+	$configtimeout = $puppet::params::puppetagent_configtimeout,
 ) inherits puppet::params {
 
 	case $::osfamily {
 		redhat: {
 			include yum::repo::puppetlabs
-		}
-		default: {
-			fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
 		}
 	}
 
@@ -85,37 +86,42 @@ class puppet::agent (
 		setting => 'noop',
 		value => "${noop}",
 	}
+	ini_setting { 'puppetagent_configtimeout':
+		section => 'agent',
+		setting => 'configtimeout',
+		value => "${configtimeout}",
+	}
 
-	if $puppetagent_service {
-		service { $puppet::params::puppetagent_srv:
-		    enable => true,
-			ensure => running,
-			hasrestart => true,
-			hasstatus => true,
-			require => Package[$puppet::params::puppetagent_pkg],
-			subscribe => File[$puppet::params::puppet_config]
-		}
+	if $service {
+		$service_enable = true
+		$service_ensure = running
 	}
 	else {
-		service { $puppet::params::puppetagent_srv:
-		    enable => false,
-			ensure => stopped,
-			hasrestart => true,
-			hasstatus => true,
-			require => Package[$puppet::params::puppetagent_pkg],
-		}
+		$service_enable = false
+		$service_ensure = stopped
+	}
+	service { $puppet::params::puppetagent_srv:
+		enable => $service_enable,
+		ensure => $service_ensure,
+		hasrestart => true,
+		hasstatus => true,
+		require => Package[$puppet::params::puppetagent_pkg],
+		subscribe => File[$puppet::params::puppet_config]
 	}
 
     /*randomize cron runs..*/
-	if cron {
-		$r1 = fqdn_rand(30)
-		$r2 = $r1+30
-
-		cron { 'puppetagent':
-			ensure => present,
-			command => "${puppet::params::puppetagent_croncommand} 2>&1 >/dev/null",
-			user => root,
-			minute => [$r1,$r2],
-		}
+    $r1 = fqdn_rand(30)
+	$r2 = $r1+30
+	if $cron {
+		$cron_ensure = present
+	}
+	else {
+		$cron_ensure = absent
+	}
+	cron { 'puppetagent':
+		ensure => $cron_ensure,
+		command => "${puppet::params::puppetagent_croncommand} --configtimeout ${puppet::params::puppetagent_configtimeout} 2>&1 >/dev/null",
+		user => root,
+		minute => [$r1,$r2],
 	}
 }
