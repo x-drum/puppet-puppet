@@ -62,14 +62,14 @@ class puppet::agent (
 	}
 	file { $puppet::params::puppet_config:
 		ensure => present,
-		owner => root,
-		group => root,
+		owner => $puppet::params::puppet_owner,
+		group => $puppet::params::puppet_group,
 		mode => '0644',
 	}
 
 	Ini_setting {
-		path    => $puppet::params::puppet_config,
-		ensure  => present,
+		path => $puppet::params::puppet_config,
+		ensure => present,
 	}
 	ini_setting { 'puppetagent_servername':
 		section => 'agent',
@@ -121,7 +121,7 @@ class puppet::agent (
 	cron { 'puppetagent':
 		ensure => $cron_ensure,
 		command => "${puppet::params::puppetagent_croncommand} --configtimeout ${puppet::params::puppetagent_configtimeout} 2>&1 >/dev/null",
-		user => root,
+		user => $puppet::params::puppet_owner,
 		minute => [$r1,$r2],
 	}
 }

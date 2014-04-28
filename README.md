@@ -1,6 +1,6 @@
 ## This module manages puppet: master and agent nodes.
 
-Currently supports: RHEL/CentOS, OpenBSD
+Currently supports: RHEL/CentOS, OpenBSD (agent only)
 
 ## Class: puppet::master
 

@@ -87,8 +87,8 @@ class puppet::master (
 	if($standalone) {
 		file { $puppet::params::puppet_config:
 			ensure => present,
-			owner => root,
-			group => root,
+			owner => $puppet::params::puppet_owner,
+			group => $puppet::params::puppet_group,
 			mode => '0644',
 			require => Package[$puppet::params::puppetmaster_pkg],
 			notify => Service[$puppet::params::puppetmaster_srv],
@@ -105,8 +105,8 @@ class puppet::master (
 		include apache::params
 		file { $puppet::params::puppet_config:
 			ensure => present,
-			owner => root,
-			group => root,
+			owner => $puppet::params::puppet_owner,
+			group => $puppet::params::puppet_group,
 			mode => '0644',
 			notify => Service[$apache::params::service_name],
 		}
@@ -136,8 +136,8 @@ class puppet::master (
 		apache::vhost { 'puppetmaster':
 			port    => '8140',
 			docroot => "${puppet::params::puppetmaster_docroot}/public/",
-			docroot_owner => 'root',
-			docroot_group => 'root',
+			docroot_owner => '${puppet::params::puppet_owner}',
+			docroot_group => '${$puppet::params::puppet_group}',
 			ssl => true,
 			ssl_options => ['+StdEnvVars','+ExportCertData'],
 			ssl_protocol => 'All -SSLv2',
@@ -162,8 +162,8 @@ class puppet::master (
 			RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e'
 		}
 		file { $puppet::params::puppetmaster_docroot:
-			owner => root,
-			group => root,
+			owner => $puppet::params::puppet_owner,
+			group => $puppet::params::puppet_group,
 			ensure => directory,
 		}
 		file { "${puppet::params::puppetmaster_docroot}/public/":

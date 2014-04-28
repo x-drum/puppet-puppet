@@ -9,4 +9,3 @@ project_page 'https://github.com/x-drum/puppet-puppet'
 dependency 'puppetlabs-apache', '>= 1.0.1'
 dependency 'puppetlabs-inifile', '>= 1.0.3'
 dependency 'example42-yum', '>= 2.1.10'
-
