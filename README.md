@@ -79,3 +79,5 @@ puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifes
  }
  ```
 
+### Copyright:
+Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
