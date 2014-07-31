@@ -120,7 +120,7 @@ class puppet::agent (
 	}
 	cron { 'puppetagent':
 		ensure => $cron_ensure,
-		command => "${puppet::params::puppetagent_croncommand} --configtimeout ${puppet::params::puppetagent_configtimeout} 2>&1 >/dev/null",
+		command => "${puppet::params::puppet_prefix}/${puppet::params::puppetagent_croncommand} --configtimeout ${puppet::params::puppetagent_configtimeout} 2>&1 >/dev/null",
 		user => $puppet::params::puppet_owner,
 		minute => [$r1,$r2],
 	}
