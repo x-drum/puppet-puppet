@@ -188,7 +188,7 @@ class puppet::master (
     exec { "puppetmaster_firstrun":
       path    => "/usr/bin:/usr/sbin:/bin:/usr/local/bin:/sbin",
       command => "service puppetmaster start; sleep 2; service puppetmaster stop",
-      onlyif  => ["test ! -f /var/lib/puppet/ssl/certs/${fqdn}.pem"],
+      onlyif  => ["test ! -f ${puppet::params::puppet_ssldir}/certs/${fqdn}.pem"],
       notify  => Service["httpd"],
     }
   }

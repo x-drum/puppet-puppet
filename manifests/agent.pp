@@ -30,8 +30,8 @@
 #
 #  class { 'puppet::agent':
 #    servername => 'master.foo.bar',
-#    service => true,
-#    cron => false,
+#    service    => true,
+#    cron       => false,
 #  }
 #
 # === Authors

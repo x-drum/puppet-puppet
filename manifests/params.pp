@@ -37,6 +37,7 @@ class puppet::params {
   	  $puppet_owner = "root"
   	  $puppet_group = "root"
   	  $puppet_prefix = "/usr/bin"
+      $puppet_ssldir = "/var/lib/puppet/ssl"
   	  $puppetagent_pkg = "puppet"
   	  $puppetagent_srv = "puppet"
   	  $puppetmaster_pkg = "puppet-server"
@@ -49,6 +50,7 @@ class puppet::params {
   	  $puppet_owner = "root"
   	  $puppet_group = "wheel"
   	  $puppet_prefix = "/usr/local/bin"
+      $puppet_ssldir = "/etc/puppet/ssl"
   	  $puppetagent_pkg = "puppet"
   	  $puppetagent_srv = "puppetd"
   	}
