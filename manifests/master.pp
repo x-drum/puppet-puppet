@@ -44,6 +44,8 @@ class puppet::master (
   $autosign = $puppet::params::puppetmaster_autosign,
   $servername = $puppet::params::puppetmaster_servername,
   $modulepath = $puppet::params::puppetmaster_modulepath,
+  $maintenance = $puppet::params::puppetmaster_maintenance,
+  $maintenance_time = $puppet::params::puppetmaster_maintenance_time,
 ) inherits puppet::params {
 
   case $::osfamily {
@@ -61,7 +63,7 @@ class puppet::master (
 
   Ini_setting {
     path    => $puppet::params::puppet_config,
-	ensure  => present,
+    ensure  => present,
   }
   ini_setting { 'master_pluginsync':
     section => 'main',
@@ -82,6 +84,17 @@ class puppet::master (
     section => 'main',
     setting => 'modulepath',
     value   => $modulepath,
+  }
+
+  $maintenance_ensure = $maintenance ? {
+    true  => present,
+    false => absent,
+  }
+  cron { 'puppetmaster_maintenance':
+    ensure  => $maintenance_ensure,
+    command => "find ${puppet::params::puppetmaster_reportdir} ${puppet::params::puppetmaster_filebucketdir} -type f -mtime +${puppet::params::puppetmaster_maintenance_retention} -exec rm -rf {} \\;",
+    user    => $puppet::params::puppet_owner,
+    minute  => $maintenance_time,
   }
 
   if($standalone) {
@@ -139,7 +152,7 @@ class puppet::master (
       port              => '8140',
       docroot           => "${puppet::params::puppetmaster_docroot}/public/",
       docroot_owner     => '${puppet::params::puppet_owner}',
-      docroot_group     => '${$puppet::params::puppet_group}',
+      docroot_group     => '${puppet::params::puppet_group}',
       ssl               => true,
       ssl_options       => ['+StdEnvVars','+ExportCertData'],
       ssl_protocol      => 'All -SSLv2',
@@ -152,9 +165,9 @@ class puppet::master (
       ssl_verify_client => 'optional',
       ssl_verify_depth  => '1',
       directories       => [
-        { 'path' => "${puppet::params::puppetmaster_docroot}",
-          'provider' => 'directory',
-          'allow' => 'from all',
+        { 'path'           => "${puppet::params::puppetmaster_docroot}",
+          'provider'       => 'directory',
+          'allow'          => 'from all',
           'allow_override' => 'none',
         },
       ],

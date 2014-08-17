@@ -109,12 +109,12 @@ class puppet::agent (
   /*randomize cron runs..*/
   $r1 = fqdn_rand(30)
   $r2 = $r1+30
-  if $cron {
-  	$cron_ensure = present
+
+  $cron_ensure = $cron ? {
+    true  => present,
+    false => absent,
   }
-  else {
-  	$cron_ensure = absent
-  }
+
   cron { 'puppetagent':
     ensure  => $cron_ensure,
     command => "${puppet::params::puppet_prefix}/${puppet::params::puppetagent_croncommand} --configtimeout ${puppet::params::puppetagent_configtimeout} 2>&1 >/dev/null",
