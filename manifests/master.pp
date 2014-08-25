@@ -18,6 +18,12 @@
 # [*modulepath*]
 #   Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
 #
+# [*maintenance*]
+#   Enable the maintenance cronjob (cleanup old reports and clientbucket files) [true, false], default: false.
+#
+# [*maintenance_time*]
+#   Scheduled time for the maintenance cronjob [array: mm,hh], default: 00:30.
+#
 # Requires:
 # puppetlabs-apache
 # puppetlabs-inifile
