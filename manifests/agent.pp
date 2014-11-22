@@ -3,22 +3,22 @@
 # Class for the puppet agent module.
 #
 # Parameters:
-#   [*servername*]
+#   servername
 #     Setup servername in puppet.conf, default: puppet.
 # 
-#   [*noop*]
+#   noop
 #     Whether puppet agent should be run in noop mode, default: false.
 #
-#   [*cron*]
+#   cron
 #     Enable puppet agent runs via cron job, default: false.
 #
-#   [*service*]
+#   service
 #     Enable puppet agent service, default: true.
 #
-#   [*pluginsync*]
+#   pluginsync
 #     Enable pluginsync for the puppet agent, default: true.
 #
-#   [*configtimeout*]
+#   configtimeout
 #     Configuration timeout in seconds for the puppet agent, default: 900.
 #
 # Requires:
@@ -34,11 +34,7 @@
 #    cron       => false,
 #  }
 #
-# === Authors
-#
 # Alessio Cassibba (X-Drum) <swapon@gmail.com>
-#
-# === Copyright
 #
 # Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
 #

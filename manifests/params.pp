@@ -5,16 +5,11 @@
 # Sample Usage:
 # *Don't include directly*
 #
-# === Authors
-#
 # Alessio Cassibba (X-Drum) <swapon@gmail.com>
-#
-# === Copyright
 #
 # Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
 #
 class puppet::params {
-  $puppet_config = "/etc/puppet/puppet.conf"
   $puppetmaster_standalone = true
   $puppetmaster_autosign = false
   $puppetmaster_modulepath = '$confdir/modules:/usr/share/puppet/modules'
@@ -36,6 +31,7 @@ class puppet::params {
 
   case $::osfamily {
   	redhat: {
+      $puppet_config = "/etc/puppet/puppet.conf"
   	  $puppet_owner = "root"
   	  $puppet_group = "root"
   	  $puppet_prefix = "/usr/bin"
@@ -51,6 +47,7 @@ class puppet::params {
   	  $passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.21'
   	}
   	openbsd: {
+      $puppet_config = "/etc/puppet/puppet.conf"
   	  $puppet_owner = "root"
   	  $puppet_group = "wheel"
   	  $puppet_prefix = "/usr/local/bin"
@@ -58,8 +55,22 @@ class puppet::params {
   	  $puppetagent_pkg = "puppet"
   	  $puppetagent_srv = "puppetd"
   	}
+    FreeBSD: {
+      $puppet_config = "/usr/local/etc/puppet/puppet.conf"
+      $puppet_owner = "root"
+      $puppet_group = "wheel"
+      $puppet_prefix = "/usr/local/bin"
+      $puppet_ssldir = "/var/puppet/ssl"
+      $puppetagent_pkg = "puppet"
+      $puppetagent_srv = "puppet"
+    }
   	default: {
-  	  fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
+      $puppet_owner = "root"
+      $puppet_group = "root"
+      $puppet_prefix = "/usr/bin"
+      $puppet_ssldir = "/var/lib/puppet/ssl"
+      $puppetagent_pkg = "puppet"
+      $puppetagent_srv = "puppet"
   	}
   }
 }

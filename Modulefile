@@ -1,5 +1,5 @@
 name 'xdrum-puppet'
-version '0.0.5'
+version '0.0.6'
 source 'git://github.com/x-drum/puppet-puppet'
 author 'Alessio Cassibba (X-Drum)'
 license 'Apache 2.0'

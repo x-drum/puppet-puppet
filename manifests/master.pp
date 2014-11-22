@@ -3,25 +3,25 @@
 # Class for the puppet master module.
 #
 # Parameters:
-# [*standalone*]
+# standalone
 #   Run puppetmaster in standalone mode (embedded WEBrick)
 #   or using Apache (namely apache, mod_passenger and rack) [true, false]
 #   default: true.
 #
-# [*autosign*]
+# autosign
 #   Enable autosigning CSRs [true, false], default: false.
 #   TODO: filepath support
 #
-# [*servername*]
+# servername
 #   Setup servername in puppet.conf, default: puppet.
 #
-# [*modulepath*]
+# modulepath
 #   Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
 #
-# [*maintenance*]
+# maintenance
 #   Enable the maintenance cronjob (cleanup old reports and clientbucket files) [true, false], default: false.
 #
-# [*maintenance_time*]
+# maintenance_time
 #   Scheduled time for the maintenance cronjob [array: mm,hh], default: 00:30.
 #
 # Requires:
@@ -37,11 +37,8 @@
 #    standalone => false,
 #  }
 #
-# === Authors
 #
 # Alessio Cassibba (X-Drum) <swapon@gmail.com>
-#
-# === Copyright
 #
 # Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
 #
@@ -59,7 +56,7 @@ class puppet::master (
       include yum::repo::puppetlabs
     }
     default: {
-      fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
+      fail("Unsupported platform for this mode: ${::osfamily}/${::operatingsystem}")
     }
   }
 
