@@ -1,0 +1,36 @@
+{
+  "name": "xdrum-puppet",
+  "version": "0.0.6",
+  "author": "Alessio Cassibba (X-Drum)",
+  "summary": "Puppet Module",
+  "license": "Apache 2.0",
+  "source": "git://github.com/x-drum/puppet-puppet",
+  "project_page": "https://github.com/x-drum/puppet-puppet",
+  "issues_url": "https://github.com/x-drum/puppet-puppet/issues",
+  "description": "Configure and install puppet for agent and master nodes.",
+  "tags": [
+    "ubuntu",
+    "debian",
+    "puppet",
+    "puppetagent",
+    "puppetmaster",
+    "freebsd",
+    "gentoo",
+    "archlinux",
+    "rhel"
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-apache",
+      "version_requirement": ">= 1.0.1"
+    },
+    {
+      "name": "puppetlabs-inifile",
+      "version_requirement": ">= 1.0.3"
+    },
+    {
+      "name": "example42-yum",
+      "version_requirement": ">= 2.1.10"
+    }
+  ]
+}
