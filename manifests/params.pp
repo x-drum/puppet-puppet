@@ -30,31 +30,31 @@ class puppet::params {
   $puppetagent_croncommand = "puppet agent --test"
 
   case $::osfamily {
-  	redhat: {
+    redhat: {
       $puppet_config = "/etc/puppet/puppet.conf"
-  	  $puppet_owner = "root"
-  	  $puppet_group = "root"
-  	  $puppet_prefix = "/usr/bin"
+      $puppet_owner = "root"
+      $puppet_group = "root"
+      $puppet_prefix = "/usr/bin"
       $puppet_ssldir = "/var/lib/puppet/ssl"
-  	  $puppetagent_pkg = "puppet"
-  	  $puppetagent_srv = "puppet"
-  	  $puppetmaster_pkg = "puppet-server"
-  	  $puppetmaster_srv = "puppetmaster"
+      $puppetagent_pkg = "puppet"
+      $puppetagent_srv = "puppet"
+      $puppetmaster_pkg = "puppet-server"
+      $puppetmaster_srv = "puppetmaster"
       $puppetmaster_reportdir = '/var/lib/puppet/reports'
       $puppetmaster_filebucketdir = '/var/lib/puppet/clientbucket'
-  	  $rack_pkg = 'rubygem-rack'
-  	  $rack_config = '/usr/share/puppet/ext/rack/config.ru'
-  	  $passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.21'
-  	}
-  	openbsd: {
+      $rack_pkg = 'rubygem-rack'
+      $rack_config = '/usr/share/puppet/ext/rack/config.ru'
+      $passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.21'
+    }
+    openbsd: {
       $puppet_config = "/etc/puppet/puppet.conf"
-  	  $puppet_owner = "root"
-  	  $puppet_group = "wheel"
-  	  $puppet_prefix = "/usr/local/bin"
+      $puppet_owner = "root"
+      $puppet_group = "wheel"
+      $puppet_prefix = "/usr/local/bin"
       $puppet_ssldir = "/etc/puppet/ssl"
-  	  $puppetagent_pkg = "puppet"
-  	  $puppetagent_srv = "puppetd"
-  	}
+      $puppetagent_pkg = "puppet"
+      $puppetagent_srv = "puppetd"
+    }
     FreeBSD: {
       $puppet_config = "/usr/local/etc/puppet/puppet.conf"
       $puppet_owner = "root"
@@ -64,13 +64,14 @@ class puppet::params {
       $puppetagent_pkg = "puppet"
       $puppetagent_srv = "puppet"
     }
-  	default: {
+    default: {
+      $puppet_config = "/etc/puppet/puppet.conf"
       $puppet_owner = "root"
       $puppet_group = "root"
       $puppet_prefix = "/usr/bin"
       $puppet_ssldir = "/var/lib/puppet/ssl"
       $puppetagent_pkg = "puppet"
       $puppetagent_srv = "puppet"
-  	}
+    }
   }
 }
