@@ -3,23 +3,27 @@
 # Class for the puppet agent module.
 #
 # Parameters:
-#   servername
-#     Setup servername in puppet.conf, default: puppet.
-# 
-#   noop
-#     Whether puppet agent should be run in noop mode, default: false.
+#   configtimeout
+#     Configuration timeout in seconds for the puppet agent, default: 900.
 #
 #   cron
 #     Enable puppet agent runs via cron job, default: false.
 #
-#   service
-#     Enable puppet agent service, default: true.
+#   noop
+#     Whether puppet agent should be run in noop mode, default: false.
+#
+#   manage_repo
+#     Enable repository management, default: false.
 #
 #   pluginsync
 #     Enable pluginsync for the puppet agent, default: true.
 #
-#   configtimeout
-#     Configuration timeout in seconds for the puppet agent, default: 900.
+#   servername
+#     Setup servername in puppet.conf, default: puppet.
+#
+#   service
+#     Enable puppet agent service, default: true.
+#
 #
 # Requires:
 # puppetlabs-inifile
@@ -36,20 +40,23 @@
 #
 # Alessio Cassibba (X-Drum) <swapon@gmail.com>
 #
-# Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
+# Copyright 2015 Alessio Cassibba (X-Drum), unless otherwise noted.
 #
 class puppet::agent (
-  $servername = $puppet::params::puppetagent_servername,
-  $noop = $puppet::params::puppetagent_noop,
-  $cron = $puppet::params::puppetagent_cron,
-  $service = $puppet::params::puppetagent_service,
-  $pluginsync = $puppet::params::puppetagent_pluginsync,
   $configtimeout = $puppet::params::puppetagent_configtimeout,
+  $cron          = $puppet::params::puppetagent_cron,
+  $manage_repo   = $puppet::params::manage_repo,
+  $noop          = $puppet::params::puppetagent_noop,
+  $pluginsync    = $puppet::params::puppetagent_pluginsync,
+  $servername    = $puppet::params::puppetagent_servername,
+  $service       = $puppet::params::puppetagent_service,
 ) inherits puppet::params {
 
-  case $::osfamily {
-    redhat: {
-      include yum::repo::puppetlabs
+  if $manage_repo {
+    case $::osfamily {
+      redhat: {
+        include yum::repo::puppetlabs
+      }
     }
   }
 

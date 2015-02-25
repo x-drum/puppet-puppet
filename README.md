@@ -7,26 +7,29 @@ Currently supports: RHEL/CentOS, OpenBSD (agent only)
 Class for the puppet master module.
 
 ### Parameters:
-[*standalone*]  
-  Run puppetmaster in standalone mode (embedded WEBrick)
-  or using Apache (namely apache, mod_passenger and rack) [true, false]
-  default: true.
-
 [*autosign*]  
   Enable autosigning CSRs [true, false], default: false.
   TODO: filepath support
-
-[*servername*]  
-  Setup servername in puppet.conf, default: puppet.
-
-[*modulepath*]  
-  Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
 
 [*maintenance*]  
   Enable the maintenance cronjob (cleanup old reports and clientbucket files) [true, false], default: false.
 
 [*maintenance_time*]  
   Scheduled time for the maintenance cronjob [array: mm,hh], default: 00:30.
+
+[*manage_repo*]  
+  Enable repository management, default: false.
+
+[*modulepath*]  
+  Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
+
+[*servername*]  
+  Setup servername in puppet.conf, default: puppet.
+
+[*standalone*]  
+  Run puppetmaster in standalone mode (embedded WEBrick)
+  or using Apache (namely apache, mod_passenger and rack) [true, false]
+  default: true.
 
 ### Requires:  
 * puppetlabs-apache
@@ -50,23 +53,23 @@ puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifes
 Class for the puppet agent module.
 
 ### Parameters:
-  [*servername*]  
-    Setup servername in puppet.conf, default: puppet.
+[*configtimeout*]  
+  Configuration timeout in seconds for the puppet agent, default: 900.
 
-  [*noop*]  
-    Whether puppet agent should be run in noop mode, default: false.
+[*cron*]  
+  Enable puppet agent runs via cron job, default: false.
 
-  [*cron*]  
-    Enable puppet agent runs via cron job, default: false.
+[*noop*]  
+  Whether puppet agent should be run in noop mode, default: false.
 
-  [*service*]  
-    Enable puppet agent service, default: true.
+[*pluginsync*]  
+  Enable pluginsync for the puppet agent, default: true.
 
-  [*pluginsync*]  
-    Enable pluginsync for the puppet agent, default: true.
+[*service*]  
+  Enable puppet agent service, default: true.
 
-   [*configtimeout*]  
-     Configuration timeout in seconds for the puppet agent, default: 900.
+[*servername*]  
+  Setup servername in puppet.conf, default: puppet.
 
 ### Requires:
 * puppetlabs-inifile
@@ -86,4 +89,4 @@ puppet apply --modulepath /etc/puppet/modules /etc/puppet/modules/puppet/manifes
  ```
 
 ### Copyright:
-Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
+Copyright 2015 Alessio Cassibba (X-Drum), unless otherwise noted.

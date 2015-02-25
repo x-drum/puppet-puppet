@@ -3,26 +3,29 @@
 # Class for the puppet master module.
 #
 # Parameters:
-# standalone
-#   Run puppetmaster in standalone mode (embedded WEBrick)
-#   or using Apache (namely apache, mod_passenger and rack) [true, false]
-#   default: true.
-#
 # autosign
 #   Enable autosigning CSRs [true, false], default: false.
 #   TODO: filepath support
-#
-# servername
-#   Setup servername in puppet.conf, default: puppet.
-#
-# modulepath
-#   Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
 #
 # maintenance
 #   Enable the maintenance cronjob (cleanup old reports and clientbucket files) [true, false], default: false.
 #
 # maintenance_time
 #   Scheduled time for the maintenance cronjob [array: mm,hh], default: 00:30.
+#
+#   manage_repo
+#     Enable repository management, default: false.
+#
+# modulepath
+#   Setup modulepath in puppet.conf, default: $confdir/modules:/usr/share/puppet/modules.
+#
+# servername
+#   Setup servername in puppet.conf, default: puppet.
+#
+# standalone
+#   Run puppetmaster in standalone mode (embedded WEBrick)
+#   or using Apache (namely apache, mod_passenger and rack) [true, false]
+#   default: true.
 #
 # Requires:
 # puppetlabs-apache
@@ -37,26 +40,28 @@
 #    standalone => false,
 #  }
 #
-#
 # Alessio Cassibba (X-Drum) <swapon@gmail.com>
 #
-# Copyright 2014 Alessio Cassibba (X-Drum), unless otherwise noted.
+# Copyright 2015 Alessio Cassibba (X-Drum), unless otherwise noted.
 #
 class puppet::master (
-  $standalone = $puppet::params::puppetmaster_standalone,
-  $autosign = $puppet::params::puppetmaster_autosign,
-  $servername = $puppet::params::puppetmaster_servername,
-  $modulepath = $puppet::params::puppetmaster_modulepath,
-  $maintenance = $puppet::params::puppetmaster_maintenance,
+  $autosign         = $puppet::params::puppetmaster_autosign,
+  $maintenance      = $puppet::params::puppetmaster_maintenance,
   $maintenance_time = $puppet::params::puppetmaster_maintenance_time,
+  $manage_repo      = $puppet::params::manage_repo,
+  $modulepath       = $puppet::params::puppetmaster_modulepath,
+  $servername       = $puppet::params::puppetmaster_servername,
+  $standalone       = $puppet::params::puppetmaster_standalone,
 ) inherits puppet::params {
 
-  case $::osfamily {
-    redhat: {
-      include yum::repo::puppetlabs
-    }
-    default: {
-      fail("Unsupported platform for this mode: ${::osfamily}/${::operatingsystem}")
+  if $manage_repo {
+    case $::osfamily {
+      redhat: {
+        include yum::repo::puppetlabs
+      }
+      default: {
+        fail("Unsupported platform for this mode: ${::osfamily}/${::operatingsystem}")
+      }
     }
   }
 
