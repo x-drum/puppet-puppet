@@ -1,6 +1,6 @@
 {
   "name": "xdrum-puppet",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Alessio Cassibba (X-Drum)",
   "summary": "Puppet Module",
   "license": "Apache 2.0",
